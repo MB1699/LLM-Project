@@ -1,0 +1,221 @@
+ETL vs ELT (Detailed)
+
+ETL (Extract, Transform, Load)
+ETL is a data integration process where data is:
+
+Extracted from source systems
+Transformed in a staging layer
+Loaded into a data warehouse
+
+ETL is commonly used when:
+Source data quality is poor
+Transformations are complex
+Compliance requires clean data before storage
+
+Advantages of ETL
+Better control over data quality
+Lower warehouse storage costs
+Mature tooling ecosystem
+Disadvantages of ETL
+Slower ingestion
+Less flexible analytics
+
+ELT (Extract, Load, Transform)
+ELT loads raw data first and performs transformations inside the warehouse.
+
+ELT is preferred when:
+Using cloud warehouses
+Analytics teams need flexibility
+Data volume is very large
+Advantages of ELT
+Faster ingestion
+Supports raw + transformed data
+Scales well in cloud environments
+Disadvantages of ELT
+Raw data storage cost
+Requires good access control
+
+SQL Optimization (In Depth)
+Indexing
+
+Indexes improve query performance by reducing the number of rows scanned.
+When to use indexes
+Columns used in WHERE clause
+Join keys
+High-cardinality columns
+When NOT to use indexes
+Very small tables
+Columns frequently updated
+Low-cardinality columns
+
+Query Writing Best Practices
+
+Avoid SELECT *
+Use proper JOIN conditions
+Filter data early
+Avoid unnecessary subqueries
+Execution Plans
+Execution plans show how the database runs a query.
+Things to look for
+Full table scans
+Nested loops on large tables
+Missing indexes
+
+Use:
+
+EXPLAIN
+EXPLAIN ANALYZE
+Slowly Changing Dimensions (SCD)
+SCD Type 1
+Overwrites old data
+No history preserved
+Used when historical data is not required
+
+SCD Type 2
+
+Preserves full history
+Adds a new row for every change
+Uses start_date, end_date, current_flag
+Used for
+Customer profile changes
+Employee role changes
+Pricing history
+
+SCD Type 3
+
+Limited history
+Stores previous value in another column
+Data Modeling Concepts
+Fact Tables
+Store measurable metrics
+Large in size
+Contain foreign keys
+
+Examples:
+
+sales_amount
+order_count
+Dimension Tables
+Store descriptive attributes
+Smaller than fact tables
+
+Examples:
+
+customer
+product
+time
+Star Schema
+Central fact table
+
+Denormalized dimensions
+Faster queries
+Snowflake Schema
+Normalized dimensions
+
+More joins
+Less storage
+Data Warehousing vs Data Lakes
+Data Warehouse
+Structured data
+Schema-on-write
+Optimized for analytics
+
+Examples:
+
+Snowflake
+Redshift
+BigQuery
+Data Lake
+Raw data storage
+Schema-on-read
+Cost-effective
+
+Examples:
+
+Amazon S3
+Azure Data Lake
+Google Cloud Storage
+Apache Spark Fundamentals
+Apache Spark is a distributed data processing engine.
+
+Key Features
+In-memory processing
+Supports batch & streaming
+Fault-tolerant
+Spark Architecture
+Driver: coordinates tasks
+Executors: execute tasks
+Cluster Manager: allocates resources
+Spark DataFrames
+
+Immutable
+Optimized using Catalyst optimizer
+Preferred over RDDs
+Spark Optimization Techniques
+Avoid collect()
+Use broadcast joins
+Cache reused DataFrames
+Reduce shuffle operations
+Use partition pruning
+
+Data Pipelines
+Batch Processing
+
+Scheduled execution
+Used for reporting and analytics
+Streaming Processing
+Near real-time
+Used for event-driven systems
+
+Tools:
+
+Kafka
+Spark Streaming
+Flink
+Change Data Capture (CDC)
+CDC tracks changes in source systems.
+
+Why CDC
+Near real-time analytics
+Reduced load on source systems
+Tools
+Debezium
+AWS DMS
+GoldenGate
+ Data Orchestration
+Orchestration tools manage workflow dependencies.
+Apache Airflow
+DAG-based scheduling
+Retry and monitoring support
+Data Quality & Governance
+Null checks
+Duplicate detection
+Referential integrity
+Data masking for PII
+Role-based access control
+Cloud Data Stack Example
+A modern data platform includes:
+Ingestion: Kafka / Fivetran
+Storage: S3 / ADLS
+Warehouse: Snowflake
+Transformations: dbt
+Orchestration: Airflow
+BI: Power BI / Tableau
+Real-World Scenarios
+
+Scenario: Slow SQL query
+→ Check indexes and execution plan
+
+Scenario: Duplicate data
+→ Apply deduplication logic
+
+Scenario: Late-arriving data
+→ Reprocess or use watermarking
+
+ Interview-Style Questions
+
+What is the difference between ETL and ELT?
+When would you use SCD Type 2?
+How do indexes improve performance?
+Difference between data lake and warehouse?
+How does Spark improve performance?
